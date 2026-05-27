@@ -1,19 +1,13 @@
 import { Router } from 'express'
 
+import TaskController from '../controllers/TaskController.js'
+import authMiddleware from '../middlewares/authMiddleware.js'
+
 const router = Router()
 
-router.get('/', async (req, res) => {
-  res.json([
-    {
-      id: 1,
-      title: 'Check oxygen systems',
-      status: 'pending'
-    }
-  ])
-})
+router.use(authMiddleware)
 
-router.post('/', async (req, res) => {
-  return res.status(201).json(req.body)
-})
+router.get('/', TaskController.index)
+router.post('/', TaskController.create)
 
 export default router
